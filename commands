@@ -30,12 +30,54 @@ https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwj1_8Ow
 
 IrDA-infrared protocol used by a number of laptops and PDAs to communicate over very short distances. It is prevalent on older hardware, with newer hardware using Bluetooth to communicate instead.
 
-Bluetooth - wireless technology that was created to replace IrDA to talk between devices over a very short distance. It is a short-range wireless technology that was designed as a replacement for cables and operates within a 10 meter radius 
+Bluetooth - wireless technology that was created to replace IrDA to talk between devices over a very short distance. It is a short-range
+ wireless technology that was designed as a replacement for cables and operates within a 10 meter radius 
+ 
+passing arguments to kernel - 
+1)building kernel
+2)starting kernel
+3)at run-time,by writing files in the /proc and /sys directories
+most are associated with subsystems and if subsystems exist they work.In addition to the options listed in this chapter, parameters for modules that are built in to the kernel can also be passed on the command line. (Dynamically loaded modules, of course, are not in memory when the kernel boots and therefore cannot be passed parameters at boot time.) The syntax for passing parameters consisting of the module name followed by a dot (.) and the parameter.Most module options for modules that are built into the kernel can also be changed at run time by writing to files in the subdirectory named after the module under the /sys/module/ directory. 
+
+Interrupts - complex aspect of kernel behavior. The boot-time options deal mostly with the interface between the kernel and the hardware that handles interrupts, such as the Intel chip's Advanced Programmable Interrupt Controller (APIC).
+
+irqbalance-The purpose of irqbalance is distribute hardware interrupts across processors on a multiprocessor system in order to increase performance.
+
+noirqbalance — Disable kernel IRQ balancing.
+
+irqfixup-When an interrupt is not handled, search all known interrupt handlers for it. This is intended to get systems with badly broken firmware running.
+
+
+
+#interrupt options
+apic-Control how much information the APIC subsystem generates when booting the kernel.
+noapic — Do not use any IOAPICs.
+lapic-Cause the kernel to enable the local APIC even if the BIOS had disabled it.
+nolapic — Do not use the local APIC.
+#memory options-The kernel handles memory in many different chunks and categories for different purposes. These options allow you to tweak the sizes and settings.
+highmem-Force the highmem memory zone to have an exact size of n bytes. This will work even on boxes that have no highmem zones by default. It can also reduce the size of the highmem zone for machines with a lot of memory.
+
+
+
 ===================================================
+
+/dev, /proc and /sys are “virtual (pseudo) filesystems” (not existing on harddisk, but only in RAM – so they do not consume any harddisk space and are completely created on boot).
+/sys-doesn’t interact with individual processes, but the system and kernel as a whole.
+
+/dev tree contains device nodes, which gives user space access to the device drivers in your OS’s running kernel.¹ All POSIX type OSes have a /dev tree.
+
+/proc-tree originated in System V Unix, where it only gave information about each running process, using a /proc/$PID/stuff scheme. Linux greatly extended that, adding all sorts of information about the running kernel’s status. In addition to these read-only information files, Linux’s /proc also has writable virtual files that can change the state of the running kernel. BSD type OSes generally do not have /proc at all, so much of what you find under here is non-portable.The intended solution for this mess in Linux’s /proc is /sys. Ideally, all the non-process information that got glommed into the /proc tree should have moved to /sys by now, but historical inertia has kept a lot of stuff in /proc
+
+Sysfs - a RAM based file system. (it only exists in RAM, not on harddisk)This is how programs talk to the Linux kernel and modules/drivers (take inputs from the user space to control run-time (non permanent) settings).By default, sysfs is compiled in the Linux kernel.It is designed to export the kernel data structures and their attributes from the kernel to the user space, which then avoids cluttering the /proc file system.The advantages of sysfs over procfs are as follows:A cleaner, well-documented programming interface.Automatic clean-up of directories and files, when the device is removed from the systemThe enforced one item per file rule, which makes for a cleaner user interface.The one item per file rule mandates that in each file of sysfs, there will be only one value that can be put in or read from it. This feature really makes it a cleaner interface.
+
+https://dwaves.de/2017/05/29/linux-difference-between-proc-sys-and-dev-sysfs/
+
+
 /proc/bus/input/devices-input devices directory.one of the outputs:/sys/devices/pci0000:00/0000:00:14.0/usb3/3-3/3-3.4/3-3.4:1.2/0003:2965:5023.0006/input/input7 =>/sys/ is the mountpoint of the sysfs filesystem (see the output of mount | grep sysfs)./devices/ contains a filesystem representation of the device tree (source)./pci0000:00/ describes the PCI domain and the bus number. In this case, the domain number is 0000 and the bus number is 00 (source)./0000:00:14.0/ has the the PCI domain and bus number repeated, along with the slot and function. In this case, the USB device's slot number is 14 and its function number is 0 (source)./usb3/ refers to USB controller attached to bus number 3 (source)./3-3/3-3.4/3-3.4:1.2/ has redundant information. The last /3-3.4:1.2/ means you are referring to the USB controller attached to bus 3, port 3, port 4, configuration number 1 and interface number 2 (source).
 /0003:2965:5023.0006/ means the device is attached to bus 0003, has a vendor ID of 2965, and a product ID of 5023.
 
 /sys/bus/pci/devices/-pci devices directory
+/sys/module/directory-built in modules directory
 ------------------------------------------------
 lscpi						->list pci devices.The first few bits of the lspci output show the PCI bus id for this device, 06:04.0. That is the value we will use when looking through sysfs in order to find out more information about this device.The kernel numbers PCI devices with a leading 0000: that does not show up in the output of the lspci program.Like PCI drivers, USB drivers also tell the kernel what devices they support in order for the kernel to bind the driver to the device.Now that we know the vendor and product ID for this PCI device, we need to find the proper kernel driver that advertises that it supports this device. Go back to the kernel source directory and look for pci vendor id in the directory 'include/linux/pci_ids.h'.after "cd /sys/bus/pci/devices/
 " type "cd 0000:06:04.0" (06:04.0 is a part of the content in the sys/bus/pci/devices/).then "cat device" returns device id.finding proper driver for pci and usb devices begins with finding out their vendor and device id(by knowing pci bus id for pci devices from lspci and loooking for it in sysfs,for usb type lsusb before removing and after inserting the usb) and then in kernel tree search for the id.for root filesystem  device it is needed to provide logic device(by finding device from "mount | grep " / "" and then we figure out logical device for the device.in this case it is sda) and in sys we can find the driver
@@ -48,6 +90,9 @@ grep -n					->return the line numbers containing the pattern
 mount | grep " / "				->return filesystem root filesystem uses and block device root filesystem is mounted
 ls -l /sys/block/sda				->return logical device that controls sda block device.Drivers for this are in sysfs
 ls -l /sys/<previous cmd output:devices...->	->return driver that controls the block device stated in the previous command.(SCSI disk controller driver is responsible).if there is no any result then we delete last part of the previous cmd output(if needed again it is deleted)
+
+
+
 
 
 
