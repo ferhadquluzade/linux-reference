@@ -1,5 +1,7 @@
 
 sysfs-file system provided by the Linux kernel that exports information about various kernel subsystems, hardware devices, and associated device drivers from the kernel's device model to user space through virtual files.Sysfs is used by several utilities to access information about hardware and its driver (kernel modules) such as udev or HAL
+Sysfs is a RAM based file system. (it only exists in RAM, not on harddisk)This is how programs talk to the Linux kernel and modules/drivers (take inputs from the user space to control run-time (non permanent) settings).By default, sysfs is compiled in the Linux kernel.It is designed to export the kernel data structures and their attributes from the kernel to the user space, which then avoids cluttering the /proc file system.The advantages of sysfs over procfs are as follows:A cleaner, well-documented programming interface.Automatic clean-up of directories and files, when the device is removed from the systemThe enforced one item per file rule, which makes for a cleaner user interface.The one item per file rule mandates that in each file of sysfs, there will be only one value that can be put in or read from it. This feature really makes it a cleaner interface.
+https://dwaves.de/2017/05/29/linux-difference-between-proc-sys-and-dev-sysfs/
 https://en.wikipedia.org/wiki/Sysfs
 
 devicetree-data structure describing the hardware components of a particular computer so that the operating system's kernel can use and manage those components, including the CPU or CPUs, the memory, the buses and the peripherals.Personal computers with the x86 architecture generally do not use device trees, relying instead on various auto configuration protocols (e.g. ACPI) to discover hardware. Systems which use device trees usually pass a static device tree (perhaps stored in ROM) to the operating system, but can also generate a device tree in the early stages of booting. As an example, Das U-Boot and kexec can pass a device tree when launching a new operating system. On systems with a boot loader that does not support device trees, a static device tree may be installed along with the operating system; the Linux kernel supports this approach.The purpose is to move a significant part of the hardware description out of the kernel binary, and into the compiled device tree blob, which is handed to the kernel by the boot loader, replacing a range of board-specific C source files and compile-time options in the kernel.It is specified in a Devicetree Source file (.dts) and is compiled into a Devicetree Blob or device tree binary (.dtb) file through the Devicetree compiler (DTC). Device tree source files can include other files, referred to as device tree source includes
@@ -35,6 +37,53 @@ In computing (specifically as regards Linux computing), initrd (initial ramdisk)
 The initial RAM disk (initrd) is an initial root file system that is mounted prior to when the real root file system is available. The initrd is bound to the kernel and loaded as part of the kernel boot procedure. The kernel then mounts this initrd as part of the two-stage boot process to load the modules to make the real file systems available and get at the real root file system.
 https://wiki.debian.org/Initrd
 
+SELinux-Security-Enhanced Linux (SELinux) is a security architecture for Linux® systems that allows administrators to have more control over who can access the system. It was originally developed by the United States National Security Agency (NSA) as a series of patches to the Linux kernel using Linux Security Modules (LSM).  
+https://www.redhat.com/en/topics/linux/what-is-selinux
+
+Traffic shaping - a bandwidth management technique used on computer networks which delays some or all datagrams to bring them into compliance with a desired traffic profile.[1][2] Traffic shaping is used to optimize or guarantee performance, improve latency, or increase usable bandwidth for some kinds of packets by delaying other kinds.
+https://en.wikipedia.org/wiki/Traffic_shaping
+
+
+Nts -network file system
+
+APIC -In computing, Intel's Advanced Programmable Interrupt Controller (APIC) is a family of interrupt controllers. As its name suggests, the APIC is more advanced than Intel's 8259 Programmable Interrupt Controller (PIC), particularly enabling the construction of multiprocessor systems. It is one of several architectural designs intended to solve interrupt routing efficiency issues in multiprocessor computer systems.
+The APIC provides multiprocessor support, more IRQs and faster interrupt handling. In a computer, an interrupt request (or IRQ) is a hardware signal sent to the processor that temporarily stops a running program and allows a special program, an interrupt handler, to run instead. Hardware interrupts are used to handle events such as receiving data from a modem or network card, key presses, or mouse movements.
+(Interrupt ReQuest) A hardware interrupt on a PC. There are 16 IRQ lines used to signal the CPU that a peripheral event has started or terminated. Except for PCI devices, two devices cannot use the same line
+https://archive.techarp.com/showFreeBOG848a.html
+https://en.wikipedia.org/wiki/Advanced_Programmable_Interrupt_Controller
+https://en.wikipedia.org/wiki/Interrupt_request_(PC_architecture)
+https://www.pcmag.com/encyclopedia/term/irq
+
+#Bus
+Bus-For connecting different devices to a computer different buses are used. Each bus typically has  a different data transfer speed.
+  
+  1) ISA (Industry Standard Architecture) bus: ISA bus was created by
+  IBM in 1981. ISA bus can transfer 8 or 16 bits at one time. ISA 8 bit
+  bus can run at 4.77 MHz and 16 bit at 8.33 MHz.
+  
+  2) PCI (Peripheral Component Interconnect) bus: PCI bus was created by
+  Intel in 1993. PCI bus can transfer 32 or 64 bits at one time. PCI bus
+  can run at 33 Mhz.
+  
+  3) IDE (Integrated Drive Electronics) bus: IDE bus is used for
+  connecting disks and CDROMs to the computer.
+  
+  4) USB (Universal Serial Bus): It is used for connecting keyboard and
+  mouse, and other USB devices to the computer. A USB bus has a
+  connector with four wires. Two wires are used for supplying electrical
+  power to the USB devices. USB 1.0 has a data rate of 1.5 MB/s and USB
+  2.0 which is a high speed one has a data rate of 35 MB/s.
+  
+  5) SCSI (Small Computer System Interface) bus: It is a high
+  performance bus which is used for fast disks, scanners, and for
+  devices which require high bandwidth. It has a data rate of 160 MB/s.
+  
+  6) IEEE 1394 or FireWire: IEEE 1394 is used for high speed data
+  transfer. It can transfer data at a rate of up to 400 MB/s. It is a
+  bit serial bus which is used for connection cameras, and other
+  multimedia devices.
+  https://stackoverflow.com/questions/17339640/difference-between-scsi-and-pci
+
 
 #communication
 IrDA-infrared protocol used by a number of laptops and PDAs to communicate over very short distances. It is prevalent on older hardware, with newer hardware using Bluetooth to communicate instead.
@@ -66,41 +115,55 @@ noirqbalance — Disable kernel IRQ balancing.
 irqfixup-When an interrupt is not handled, search all known interrupt handlers for it. This is intended to get systems with badly broken firmware running.
 
 
+#kernel options
+ #interrupt options
+ apic-Control how much information the APIC subsystem generates when booting the kernel.
+ noapic — Do not use any IOAPICs.
+ lapic-Cause the kernel to enable the local APIC even if the BIOS had disabled it.
+ nolapic — Do not use the local APIC.
 
-#interrupt options
-apic-Control how much information the APIC subsystem generates when booting the kernel.
-noapic — Do not use any IOAPICs.
-lapic-Cause the kernel to enable the local APIC even if the BIOS had disabled it.
-nolapic — Do not use the local APIC.
+ #memory options-The kernel handles memory in many different chunks and categories for different purposes. These options allow you to tweak the sizes and settings.
+ highmem-Force the highmem memory zone to have an exact size of n bytes. This will work even on boxes that have no highmem zones by default. It can also reduce the size of the highmem zone for machines with a lot of memory.
+ max_addr-Cause the kernel to ignore all physical memory greater than or equal to the physical address n
+ mem-Set the specific ammount of memory used by the kernel. When used with the memmap= option, physical address space collisions can be avoided. Without the memmap= option, this option could cause PCI devices to be placed at addresses that belong to unused RAM. n specifies the amount of memory to force and is measured in units of kilobytes (K), megabytes (M), or gigabytes (G).
+ mem — Disable the use of 4MB pages for kernel memory.
+ memmap — Force specific memory to be used.
+ Enable or disable the kernel's ability to map sections of memory as non-executable. By default, the mapping is enabled (on).
+ Force the kernel to ignore some of the I/O memory areas.
+ Force vmalloc to have the exact size specified by n . This can be used to increase the minimum size of the vmalloc area (which is 128 MB on the x86 processor). It can also be used to decrease the size and leave more room for directly mapped kernel RAM.
 
-#memory options-The kernel handles memory in many different chunks and categories for different purposes. These options allow you to tweak the sizes and settings.
-highmem-Force the highmem memory zone to have an exact size of n bytes. This will work even on boxes that have no highmem zones by default. It can also reduce the size of the highmem zone for machines with a lot of memory.
-max_addr-Cause the kernel to ignore all physical memory greater than or equal to the physical address n
-mem-Set the specific ammount of memory used by the kernel. When used with the memmap= option, physical address space collisions can be avoided. Without the memmap= option, this option could cause PCI devices to be placed at addresses that belong to unused RAM. n specifies the amount of memory to force and is measured in units of kilobytes (K), megabytes (M), or gigabytes (G).
-mem — Disable the use of 4MB pages for kernel memory.
-memmap — Force specific memory to be used.
-Enable or disable the kernel's ability to map sections of memory as non-executable. By default, the mapping is enabled (on).
-Force the kernel to ignore some of the I/O memory areas.
-Force vmalloc to have the exact size specified by n . This can be used to increase the minimum size of the vmalloc area (which is 128 MB on the x86 processor). It can also be used to decrease the size and leave more room for directly mapped kernel RAM.
+ #suspend options-These options change the way the kernel handles suspension for power-saving purposes.
+ resume — Specify the partition device for the suspend image.
+ noresume — Disable resume.
 
-#suspend options-These options change the way the kernel handles suspension for power-saving purposes.
-resume — Specify the partition device for the suspend image.
-noresume — Disable resume.
+ #cpu options-These options control a wide range of behavior regarding timing, processor use in multi-processor systems, and other processor issues.
+ cachesize-Sometimes CPU hardware bugs make them report the cache size incorrectly. The kernel will attempt to work around and fix known problems with most CPUs, but for some CPUs it is not possible to determine what the correct size should be. This option provides an override for these situations.
+ nosmp-Tell an SMP kernel to act as a uniprocessor kernel, even on a multiprocessor machine.
+ notsc — Disable the time stamp counter.
+ max_cpus — Maximum number of CPUs to use.
 
-#cpu options-These options control a wide range of behavior regarding timing, processor use in multi-processor systems, and other processor issues.
-cachesize-Sometimes CPU hardware bugs make them report the cache size incorrectly. The kernel will attempt to work around and fix known problems with most CPUs, but for some CPUs it is not possible to determine what the correct size should be. This option provides an override for these situations.
-nosmp-Tell an SMP kernel to act as a uniprocessor kernel, even on a multiprocessor machine.
-notsc — Disable the time stamp counter.
-max_cpus — Maximum number of CPUs to use.
+ #ramdisk options-These options control how the storage of information in memory to imitate disks (Ramdisks) is done, including init ramdisks that hold information necessary at some stages of booting.
+ initrd-Specify where the initial ramdisk for the kernel boot is located.
+ load_ramdisk — Load a kernel ramdisk from a floppy.If n is set to 1, a ramdisk is loaded by the kernel at boot time from the floppy drive.(load_ramdisk=n)
+ noinitrd — Do not use any initrd.
+ prompt_ramdisk-Prompt the user for the initial ramdisk before attempting to read it from the floppy drive.
+ ramdisk_blocksize-Tell the ramdisk driver how many bytes to use per block. The default size is 1024(ramdisk_blocksize=n)
+ ramdisk_size-Specify the size of the initial RAM disk in kilobytes. The default size is 4096 (4 MB).(ramdisk_size= n)
+ 
+ #pci options
+ off - Do not probe for the PCI bus.
+ biosForce -the use of the PCI BIOS by not accessing the hardware directly. This means that the kernel should trust the BIOS, which is not the standard thing to do (as BIOSes are known to lie more than they are known to be valid.) Use this only if your machine has a non-standard PCI host bridge and the normal boot method is not working properly.
+ nobios -Do not use the PCI BIOS, but access the hardware directly instead. This is the default method of probing for PCI devices in all kernels after 2.6.13.
+ 
+ #network options
+ shapers — Set the maximum number of network shapers.
+ thash_entries — Set the number of TCP connection hash buckets.
 
-#ramdisk options-These options control how the storage of information in memory to imitate disks (Ramdisks) is done, including init ramdisks that hold information necessary at some stages of booting.
-initrd-Specify where the initial ramdisk for the kernel boot is located.
-load_ramdisk — Load a kernel ramdisk from a floppy.If n is set to 1, a ramdisk is loaded by the kernel at boot time from the floppy drive.(load_ramdisk=n)
-noinitrd — Do not use any initrd.
-prompt_ramdisk-Prompt the user for the initial ramdisk before attempting to read it from the floppy drive.
-ramdisk_blocksize-Tell the ramdisk driver how many bytes to use per block. The default size is 1024(ramdisk_blocksize=n)
-ramdisk_size-Specify the size of the initial RAM disk in kilobytes. The default size is 4096 (4 MB).(ramdisk_size= n)
-
+ #hardware specific options
+ nousb — Disable the USB subsystem.
+ lp -parallel port and its mode.lp=0/reset disables the printer driver/causes the attached printers to be reset. 
+ parport — Specify the parallel port parameters.
+ nr_uarts — Maximum number of UARTs to be registered.
 
 
 
@@ -141,6 +204,8 @@ Types of registers:
 
 Hardware registers are similar, but occur outside CPUs. 
 https://en.wikipedia.org/wiki/Processor_register
+
+
 ===================================================
 
 /dev, /proc and /sys are “virtual (pseudo) filesystems” (not existing on harddisk, but only in RAM – so they do not consume any harddisk space and are completely created on boot).
@@ -149,11 +214,6 @@ https://en.wikipedia.org/wiki/Processor_register
 /dev tree contains device nodes, which gives user space access to the device drivers in your OS’s running kernel.¹ All POSIX type OSes have a /dev tree.
 
 /proc-tree originated in System V Unix, where it only gave information about each running process, using a /proc/$PID/stuff scheme. Linux greatly extended that, adding all sorts of information about the running kernel’s status. In addition to these read-only information files, Linux’s /proc also has writable virtual files that can change the state of the running kernel. BSD type OSes generally do not have /proc at all, so much of what you find under here is non-portable.The intended solution for this mess in Linux’s /proc is /sys. Ideally, all the non-process information that got glommed into the /proc tree should have moved to /sys by now, but historical inertia has kept a lot of stuff in /proc
-
-Sysfs - a RAM based file system. (it only exists in RAM, not on harddisk)This is how programs talk to the Linux kernel and modules/drivers (take inputs from the user space to control run-time (non permanent) settings).By default, sysfs is compiled in the Linux kernel.It is designed to export the kernel data structures and their attributes from the kernel to the user space, which then avoids cluttering the /proc file system.The advantages of sysfs over procfs are as follows:A cleaner, well-documented programming interface.Automatic clean-up of directories and files, when the device is removed from the systemThe enforced one item per file rule, which makes for a cleaner user interface.The one item per file rule mandates that in each file of sysfs, there will be only one value that can be put in or read from it. This feature really makes it a cleaner interface.
-
-https://dwaves.de/2017/05/29/linux-difference-between-proc-sys-and-dev-sysfs/
-
 
 /proc/bus/input/devices-input devices directory.one of the outputs:/sys/devices/pci0000:00/0000:00:14.0/usb3/3-3/3-3.4/3-3.4:1.2/0003:2965:5023.0006/input/input7 =>/sys/ is the mountpoint of the sysfs filesystem (see the output of mount | grep sysfs)./devices/ contains a filesystem representation of the device tree (source)./pci0000:00/ describes the PCI domain and the bus number. In this case, the domain number is 0000 and the bus number is 00 (source)./0000:00:14.0/ has the the PCI domain and bus number repeated, along with the slot and function. In this case, the USB device's slot number is 14 and its function number is 0 (source)./usb3/ refers to USB controller attached to bus number 3 (source)./3-3/3-3.4/3-3.4:1.2/ has redundant information. The last /3-3.4:1.2/ means you are referring to the USB controller attached to bus 3, port 3, port 4, configuration number 1 and interface number 2 (source).
 /0003:2965:5023.0006/ means the device is attached to bus 0003, has a vendor ID of 2965, and a product ID of 5023.
