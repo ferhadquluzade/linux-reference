@@ -227,6 +227,20 @@ https://en.wikipedia.org/wiki/Processor_register
 /usr/lib - libraries for the normal user-programs, that mostly can be found under /usr.
 /usr/local/lib - libraries for locally installed programs and packages ie. things you've compiled and installed from source-packages yourself.
 /https://superuser.com/questions/1352571/what-is-the-difference-between-usr-lib-usr-local-lib-and-usr-lib-x86-64-linux
+
+#proc
+/proc is very special in that it is also a virtual filesystem. It's sometimes referred to as a process information pseudo-file system. It doesn't contain 'real' 
+files but runtime system information (e.g. system memory, devices mounted, hardware configuration, etc). For this reason it can be regarded as a control and 
+information centre for the kernel. In fact, quite a lot of system utilities are simply calls to files in this directory.The most distinctive thing about files 
+in this directory is the fact that all of them have a file size of 0, with the exception of kcore, mtrr and self. 
+https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/proc.html
+
+#opt
+This directory is reserved for all the software and add-on packages that are not part of the default installation. For example, StarOffice, Kylix, Netscape 
+Communicator and WordPerfect packages are normally found here. To comply with the FSSTND, all third party applications should be installed in this directory. 
+Any package to be installed here must locate its static files (ie. extra fonts, clipart, database files) must locate its static files in a separate /opt/'package'
+or /opt/'provider' directory tree (similar to the way in which Windows will install new software to its own directory tree C:\Windows\Progam Files\"Program Name")
+https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html
 ------------------------------------------------
 lscpi						->list pci devices.The first few bits of the lspci output show the PCI bus id for this device, 06:04.0. That is the value we will use when looking through sysfs in order to find out more information about this device.The kernel numbers PCI devices with a leading 0000: that does not show up in the output of the lspci program.Like PCI drivers, USB drivers also tell the kernel what devices they support in order for the kernel to bind the driver to the device.Now that we know the vendor and product ID for this PCI device, we need to find the proper kernel driver that advertises that it supports this device. Go back to the kernel source directory and look for pci vendor id in the directory 'include/linux/pci_ids.h'.after "cd /sys/bus/pci/devices/
 " type "cd 0000:06:04.0" (06:04.0 is a part of the content in the sys/bus/pci/devices/).then "cat device" returns device id.finding proper driver for pci and usb devices begins with finding out their vendor and device id(by knowing pci bus id for pci devices from lspci and loooking for it in sysfs,for usb type lsusb before removing and after inserting the usb) and then in kernel tree search for the id.for root filesystem  device it is needed to provide logic device(by finding device from "mount | grep " / "" and then we figure out logical device for the device.in this case it is sda) and in sys we can find the driver
