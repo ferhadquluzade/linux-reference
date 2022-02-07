@@ -43,6 +43,14 @@ https://www.redhat.com/en/topics/linux/what-is-selinux
 Traffic shaping - a bandwidth management technique used on computer networks which delays some or all datagrams to bring them into compliance with a desired traffic profile.[1][2] Traffic shaping is used to optimize or guarantee performance, improve latency, or increase usable bandwidth for some kinds of packets by delaying other kinds.
 https://en.wikipedia.org/wiki/Traffic_shaping
 
+file descriptor (FD, less frequently fildes) -In Unix and Unix-like computer operating systems,is a unique identifier (handle) for a file or other input/output 
+resource, such as a pipe or network socket.when you open a file, the operating system creates an entry to represent that file and store the information about that 
+opened file. So if there are 100 files opened in your OS then there will be 100 entries in OS (somewhere in kernel). These entries are represented by integers like
+(...100, 101, 102....). This entry number is the file descriptor. So it is just an integer number that uniquely represents an opened file for the process
+File descriptors are a part of the POSIX API. Each Unix process (except perhaps daemons) should have three standard POSIX file descriptors, corresponding to the 
+three standard streams: stdin,stdout,stderr
+https://en.wikipedia.org/wiki/File_descriptor
+https://stackoverflow.com/questions/5256599/what-are-file-descriptors-explained-in-simple-terms
 
 Nts -network file system
 
@@ -234,6 +242,7 @@ files but runtime system information (e.g. system memory, devices mounted, hardw
 information centre for the kernel. In fact, quite a lot of system utilities are simply calls to files in this directory.The most distinctive thing about files 
 in this directory is the fact that all of them have a file size of 0, with the exception of kcore, mtrr and self. 
 https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/proc.html
+/opc/devices -block and char devices
 
 #opt
 This directory is reserved for all the software and add-on packages that are not part of the default installation. For example, StarOffice, Kylix, Netscape 
