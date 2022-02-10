@@ -62,6 +62,9 @@ https://en.wikipedia.org/wiki/Advanced_Programmable_Interrupt_Controller
 https://en.wikipedia.org/wiki/Interrupt_request_(PC_architecture)
 https://www.pcmag.com/encyclopedia/term/irq
 
+console device -usually means a combination of a display monitor and an input device, usually a keyboard and mouse pair, which allows a user to input commands and receive visual output from a computer or computer system. It can also refer to specialized computers only meant to play video games.
+https://www.techopedia.com/definition/1906/console-con
+
 Profiling -used in Linux to improve code performance by analysing call times and call chains involved in the operation. You can find out the time taken by functions (which function code took a long time to run) and this can be very useful to identify bottlenecks. There are two types of profiling — the flat or the call-graph variety.
 
 #Bus
