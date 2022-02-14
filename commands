@@ -50,7 +50,11 @@ individual program cannot take advantage of multiprocessing, unless it has multi
 completely by the operating system and the programs it runs. Users can bind their processes (force them to run on a certain processor); however, this is not 
 required, nor recommended for ordinary use. Even for most programmers, taking advantage of multiprocessing simply amounts to using multiple threads.
 Symmetric multiprocessor (SMP) machines have one or more CPU boards, each of which can accommodate two processors.
+multiprocessing -has different memory areas for different processes which big memory,easy to kill child processes,uses multiple processors to finish in less time
+multithreading -has the same memory area for threads of the same application,not possible to koll child processes,fast to make new threads,easy to reach other memory
+areas,threads run parallel,
 https://www.ibm.com/docs/en/aix/7.2?topic=concepts-programming-multiprocessor-systems
+
 
  deadlock -if one function acquires a lock and then calls another function that also attempts to acquire the lock, your code deadlocks.Neither semaphores nor 
  spinlocks allow a lockholder to acquire the lock a second time
