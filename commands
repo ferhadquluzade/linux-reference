@@ -43,6 +43,19 @@ https://www.redhat.com/en/topics/linux/what-is-selinux
 Traffic shaping - a bandwidth management technique used on computer networks which delays some or all datagrams to bring them into compliance with a desired traffic profile.[1][2] Traffic shaping is used to optimize or guarantee performance, improve latency, or increase usable bandwidth for some kinds of packets by delaying other kinds.
 https://en.wikipedia.org/wiki/Traffic_shaping
 
+#uniprocessor,multiprocessor,thread
+a uniprocessor system, threads execute one after another in a time-sliced manner. This contrasts with a multiprocessor system, where several threads execute at 
+the same time, one on each available processor. Overall performance can be improved by running different process threads on different processors. However, an 
+individual program cannot take advantage of multiprocessing, unless it has multiple threads.Multiprocessing is not apparent to most users because it is handled 
+completely by the operating system and the programs it runs. Users can bind their processes (force them to run on a certain processor); however, this is not 
+required, nor recommended for ordinary use. Even for most programmers, taking advantage of multiprocessing simply amounts to using multiple threads.
+Symmetric multiprocessor (SMP) machines have one or more CPU boards, each of which can accommodate two processors.
+https://www.ibm.com/docs/en/aix/7.2?topic=concepts-programming-multiprocessor-systems
+
+ deadlock -if one function acquires a lock and then calls another function that also attempts to acquire the lock, your code deadlocks.Neither semaphores nor 
+ spinlocks allow a lockholder to acquire the lock a second time
+
+
 file descriptor (FD, less frequently fildes) -In Unix and Unix-like computer operating systems,is a unique identifier (handle) for a file or other input/output 
 resource, such as a pipe or network socket.when you open a file, the operating system creates an entry to represent that file and store the information about that 
 opened file. So if there are 100 files opened in your OS then there will be 100 entries in OS (somewhere in kernel). These entries are represented by integers like
