@@ -55,10 +55,24 @@ multithreading -has the same memory area for threads of the same application,not
 areas,threads run parallel,
 https://www.ibm.com/docs/en/aix/7.2?topic=concepts-programming-multiprocessor-systems
 
+#spinlock,semaphore,deadlock
+deadlock -if one function acquires a lock and then calls another function that also attempts to acquire the lock, your code deadlocks.Neither semaphores nor 
+spinlocks allow a lockholder to acquire the lock a second time
+#spinlock
+spinlock -prevents threads acquiring the lock.a thread waits in loop or spin till the lock is ready.the thread holds spinlock and then releases it otherwise it
+also prevents other threads to get lock back.it should not be used for a long time therefore since spinlock uses cpu cycle to check if the lock is not busy
+https://www.javatpoint.com/spinlock-vs-semaphore
+#Semaphores:
+Counting Semaphore
+Counting Semaphore -In counting semaphore, multiple resources are handled. They are initialized with the count function, and resources are allocated until the 
+count reaches 0. The task requesting the resources will be blocked, and they have a non-restricted value domain. When several resources are added, the count 
+value increases, and when the number of resources reduces, the count is reduced.
 
- deadlock -if one function acquires a lock and then calls another function that also attempts to acquire the lock, your code deadlocks.Neither semaphores nor 
- spinlocks allow a lockholder to acquire the lock a second time
-
+Binary Semaphore
+Binary Semaphore -In binary semaphore, the semaphore value ranges from 0 to 1. It's similar to mutex lock, with the difference that mutex is a locking method 
+and semaphore is a signalling method. When a process needs to use a binary semaphore resource, it invokes the wait() method, which decreases the semaphore's value 
+from 1 to 0.When the process releases the resource, it uses the signal() method to increase the semaphore value to 1. When a process needs to access a resource, 
+and the semaphore value is 0, it uses the wait() method to block until the current process that is using the resource releases it.
 
 file descriptor (FD, less frequently fildes) -In Unix and Unix-like computer operating systems,is a unique identifier (handle) for a file or other input/output 
 resource, such as a pipe or network socket.when you open a file, the operating system creates an entry to represent that file and store the information about that 
